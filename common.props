@@ -1,0 +1,31 @@
+<Project>
+
+  <!-- Abp相关配置 -->
+  <Import Project="abp.props"></Import>
+
+  <PropertyGroup>
+	  <AbpvNextVersion>$(AbpVersion)</AbpvNextVersion>
+  </PropertyGroup>
+
+  <!-- 编译设置 -->
+  <PropertyGroup>
+    <!-- 使用c#最新版本 -->
+    <LangVersion>latest</LangVersion>
+    <!-- 忽略哪些编译警告 -->
+    <NoWarn>$(NoWarn);CS1591;NU1603</NoWarn>
+    <!-- 生成xml注释文件 -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Package 相关设置 -->
+  <PropertyGroup>
+    <Version>$(AbpvNextVersion)</Version>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryType>git</RepositoryType>
+	  <PackageProjectUrl>https://github.com/tanyongzheng/AbpvNext</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tanyongzheng/AbpvNext</RepositoryUrl>
+	  <ReleaseNotes></ReleaseNotes>
+	  <Description>Abp vNext模块封装</Description>
+  </PropertyGroup>
+
+</Project>

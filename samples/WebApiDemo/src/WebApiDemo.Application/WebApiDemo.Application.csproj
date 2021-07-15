@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>WebApiDemo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\templates\src\AbpvNext.Application\AbpvNext.Application.csproj" />
+    <ProjectReference Include="..\WebApiDemo.Domain\WebApiDemo.Domain.csproj" />
+    <ProjectReference Include="..\WebApiDemo.Application.Contracts\WebApiDemo.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
