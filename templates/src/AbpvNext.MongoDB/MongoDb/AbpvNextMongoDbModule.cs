@@ -27,13 +27,9 @@ namespace AbpvNext.MongoDB
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddMongoDbContext<AbpvNextMongoDbContext>(options =>
-            {
-                options.AddDefaultRepositories();
-            });
-
             Configure<AbpUnitOfWorkDefaultOptions>(options =>
             {
+                // 默认禁用工作单元事务
                 options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
             });
         }

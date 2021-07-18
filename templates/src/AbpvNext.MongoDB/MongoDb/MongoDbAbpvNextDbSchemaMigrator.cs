@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-//using AbpvNext.Data;
+using AbpvNext.Data;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.MongoDB;
 
 namespace AbpvNext.MongoDB
 {
-    public class MongoDbAbpvNextDbSchemaMigrator //: IAbpvNextDbSchemaMigrator , ITransientDependency
+    public class MongoDbAbpvNextDbSchemaMigrator : IAbpvNextDbSchemaMigrator , ITransientDependency
     {
         private readonly IServiceProvider _serviceProvider;
 
