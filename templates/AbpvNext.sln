@@ -69,6 +69,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConsoleDemo", "ConsoleDemo"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "..\samples\ConsoleDemo\ConsoleApp\ConsoleApp.csproj", "{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpvNext.IdentityServer", "src\AbpvNext.IdentityServer\AbpvNext.IdentityServer.csproj", "{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +213,7 @@ Global
 		{3D63CC91-2022-4A95-97F4-4C803A924283} = {BB115385-EF36-4F28-9648-362518FD3A63}
 		{2B6B2031-C519-4E70-BD7D-51F7396869A4} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B} = {2B6B2031-C519-4E70-BD7D-51F7396869A4}
+		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}

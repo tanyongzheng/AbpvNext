@@ -341,3 +341,4 @@ ASALocalRun/
 healthchecksdb
 /Demos/OrderService/Logs
 /Demos/UserService/Logs
+/samples/WebApiDemo/src/WebApiDemo.IdentityServer/Logs

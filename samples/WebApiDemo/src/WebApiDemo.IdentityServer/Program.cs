@@ -1,4 +1,6 @@
 ﻿using System;
+using AbpvNext;
+using AbpvNext.MultiTenancy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -10,6 +12,8 @@ namespace WebApiDemo
     {
         public static int Main(string[] args)
         {
+            MultiTenancyConsts.IsEnabled = true;
+            AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "WebApiDemo";
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
