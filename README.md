@@ -215,7 +215,7 @@ Abp vNext框架的基础封装
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<WebApiDemoResource>("en")
+                    .Add<ProjectNameResource>("en")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/ProjectName");
 
@@ -253,7 +253,7 @@ Abp vNext框架的基础封装
         typeof(ProjectNameDomainSharedModule),
         typeof(AbpvNextDomainModule)
     )]
-    public class WebApiDemoDomainModule : AbpModule
+    public class ProjectNameDomainModule : AbpModule
     {
 
     }
@@ -277,7 +277,7 @@ Abp vNext框架的基础封装
     {
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
-            WebApiDemoDtoExtensions.Configure();
+            ProjectNameDtoExtensions.Configure();
         }
     }
 ~~~
@@ -329,7 +329,7 @@ Abp vNext框架的基础封装
     {
         protected ProjectNameAppService()
         {
-            LocalizationResource = typeof(WebApiDemoResource);
+            LocalizationResource = typeof(ProjectNameResource);
         }
     }
 ~~~
@@ -382,7 +382,7 @@ Abp vNext框架的基础封装
                  * This class can be used to map these extra properties to table fields in the database.
                  *
                  * USE THIS CLASS ONLY TO CONFIGURE EF CORE RELATED MAPPING.
-                 * USE WebApiDemoModuleExtensionConfigurator CLASS (in the Domain.Shared project)
+                 * USE ProjectNameModuleExtensionConfigurator CLASS (in the Domain.Shared project)
                  * FOR A HIGH LEVEL API TO DEFINE EXTRA PROPERTIES TO ENTITIES OF THE USED MODULES
                  *
                  * Example: Map a property to a table field:
@@ -431,7 +431,7 @@ Abp vNext框架的基础封装
             Configure<AbpDbContextOptions>(options =>
             {
                 /* The main point to change your DBMS.
-                 * See also WebApiDemoMigrationsDbContextFactory for EF Core tooling. */
+                 * See also ProjectNameMigrationsDbContextFactory for EF Core tooling. */
                 options.UseSqlServer();
             });
 
@@ -462,7 +462,7 @@ Abp vNext框架的基础封装
         private static IConfigurationRoot BuildConfiguration()
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../WebApiDemo.DbMigrator/"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../ProjectName.DbMigrator/"))
                 .AddJsonFile("appsettings.json", optional: false);
 
             return builder.Build();
@@ -487,7 +487,7 @@ Abp vNext框架的基础封装
 
         public async Task MigrateAsync()
         {
-            /* We intentionally resolving the WebApiDemoDbContext
+            /* We intentionally resolving the ProjectNameDbContext
              * from IServiceProvider (instead of directly injecting it)
              * to properly get the connection string of the current tenant in the
              * current scope.
@@ -500,6 +500,15 @@ Abp vNext框架的基础封装
         }
     }
 ~~~
+
+9. 项目引用EF Core工具
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.*">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+			<PrivateAssets>compile; contentFiles; build; buildMultitargeting; buildTransitive; analyzers; native</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
 
 ##### 7. HttpApi项目
 
@@ -596,18 +605,18 @@ Abp vNext框架的基础封装
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
-                    options.FileSets.ReplaceEmbeddedByPhysical<WebApiDemoDomainSharedModule>(
+                    options.FileSets.ReplaceEmbeddedByPhysical<ProjectNameDomainSharedModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}WebApiDemo.Domain.Shared"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<WebApiDemoDomainModule>(
+                            $"..{Path.DirectorySeparatorChar}ProjectName.Domain.Shared"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<ProjectNameDomainModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}WebApiDemo.Domain"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<WebApiDemoApplicationContractsModule>(
+                            $"..{Path.DirectorySeparatorChar}ProjectName.Domain"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<ProjectNameApplicationContractsModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}WebApiDemo.Application.Contracts"));
-                    options.FileSets.ReplaceEmbeddedByPhysical<WebApiDemoApplicationModule>(
+                            $"..{Path.DirectorySeparatorChar}ProjectName.Application.Contracts"));
+                    options.FileSets.ReplaceEmbeddedByPhysical<ProjectNameApplicationModule>(
                         Path.Combine(hostingEnvironment.ContentRootPath,
-                            $"..{Path.DirectorySeparatorChar}WebApiDemo.Application"));
+                            $"..{Path.DirectorySeparatorChar}ProjectName.Application"));
                 });
             }
         }
@@ -657,7 +666,7 @@ Abp vNext框架的基础封装
         public static int Main(string[] args)
         {
             MultiTenancyConsts.IsEnabled = true;
-            AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "WebApiDemo";
+            AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "ProjectName";
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
@@ -741,7 +750,7 @@ Abp vNext框架的基础封装
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            using (var application = AbpApplicationFactory.Create<WebApiDemoDbMigratorModule>(options =>
+            using (var application = AbpApplicationFactory.Create<ProjectNameDbMigratorModule>(options =>
             {
                 options.Services.ReplaceConfiguration(_configuration);
                 options.UseAutofac();
@@ -775,7 +784,7 @@ Abp vNext框架的基础封装
         static async Task Main(string[] args)
         {
             MultiTenancyConsts.IsEnabled = true;
-            AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "WebApiDemo";
+            AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "ProjectName";
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
