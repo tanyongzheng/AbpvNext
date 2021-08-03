@@ -502,14 +502,14 @@ Abp vNext框架的基础封装
 ~~~
 
 9. 项目引用EF Core工具
-
+```xml
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.*">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 			<PrivateAssets>compile; contentFiles; build; buildMultitargeting; buildTransitive; analyzers; native</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
-
+```
 ##### 7. HttpApi项目
 
 1. 创建一个类库（.NET 5.0及以上版本） ProjectName.HttpApi
