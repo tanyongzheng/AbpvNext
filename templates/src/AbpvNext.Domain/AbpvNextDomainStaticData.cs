@@ -17,5 +17,11 @@
         /// 默认src
         /// </summary>
         public static string EFCoreDbMigrationSrcDirectoryPath = "src";
+
+        /// <summary>
+        /// EF Core数据迁移项目名
+        /// 默认为.EntityFrameworkCore结尾的项目
+        /// </summary>
+        public static string EFCoreDbMigrationProjectName = "src";
     }
 }

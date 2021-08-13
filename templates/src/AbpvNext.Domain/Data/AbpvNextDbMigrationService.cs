@@ -200,9 +200,13 @@ namespace AbpvNext.Data
             {
                 srcDirectoryPath = Path.Combine(Directory.GetParent(slnDirectoryPath).FullName, AbpvNextDomainStaticData.EFCoreDbMigrationSrcDirectoryPath);
             }
-
+            if (string.IsNullOrEmpty(AbpvNextDomainStaticData.EFCoreDbMigrationProjectName))
+            {
+                return Directory.GetDirectories(srcDirectoryPath)
+                    .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore")); 
+            }
             return Directory.GetDirectories(srcDirectoryPath)
-                .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore"));
+                .FirstOrDefault(d => d.EndsWith(AbpvNextDomainStaticData.EFCoreDbMigrationProjectName));
         }
 
         private string GetSolutionDirectoryPath()
