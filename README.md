@@ -1,7 +1,11 @@
 # AbpvNext
 
 #### 介绍
-Abp vNext框架的基础封装
+Abp vNext框架的基础封装<br/>
+版权说明：<br/>
+部分业务需求可能需要修改源代码，根据Abp开源协议[LGPL-3.0 License](https://github.com/abpframework/abp/blob/dev/LICENSE.md) 修改部分需要进行开源，此框架在abp基础上进行封装及修改，不涉及具体业务，可基于该框架简化开发。<br/>
+开源协议介绍：https://www.runoob.com/w3cnote/open-source-license.html
+
 
 #### 软件架构
 
