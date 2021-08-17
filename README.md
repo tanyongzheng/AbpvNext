@@ -17,7 +17,7 @@ Abp vNext框架的基础封装<br/>
  1. 集成Abp Web模板的所有依赖
  2. 是否启用多租户常量（MultiTenancyConsts.IsEnabled）改为静态变量（项目启动前配置，可放到Program类的最前面做配置）
 
-##### 3.AbpvNext.Domain.Shared
+##### 3.AbpvNext.Domain
   领域模块
   1. 集成Abp Web模板的所有依赖
   2. Domain管理服务基类（DomainManagerBase）
