@@ -117,6 +117,36 @@ namespace AbpvNext
                     options.SwaggerDoc("v1", new OpenApiInfo {Title = $"{AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName} API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
+
+                    #region Swagger添加用户名密码登录授权
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                    {
+                        Description = "Swagger使用JWT来进行授权",
+                        Name = "Authorization",
+                        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                        Type = Microsoft.OpenApi.Models.SecuritySchemeType.OAuth2,
+                        Scheme = "bearer",
+                        BearerFormat = "JWT",
+                        Flows = new Microsoft.OpenApi.Models.OpenApiOAuthFlows()
+                        {
+                            Password = new Microsoft.OpenApi.Models.OpenApiOAuthFlow()
+                            {
+                                TokenUrl = new Uri(configuration["AuthServer:Authority"] + "/connect/token")
+                            }
+                        }
+                    });
+
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                            },
+                            new string[] {}
+                        }
+                    });
+                    #endregion
                 });
         }
 

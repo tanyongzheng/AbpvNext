@@ -12,6 +12,11 @@ namespace WebApiDemo
     {
         public static int Main(string[] args)
         {
+            var logPath = "Logs/log.txt";
+            // var logOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}";
+#if DEBUG
+            logPath = AppContext.BaseDirectory + logPath;
+#endif
             MultiTenancyConsts.IsEnabled = true;
             AbpvNextDomainStaticData.IdentityServerDataSeedApiResourceName = "WebApiDemo";
             Log.Logger = new LoggerConfiguration()
@@ -23,7 +28,7 @@ namespace WebApiDemo
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/logs.txt"))
+                .WriteTo.Async(c => c.File(logPath))
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif
