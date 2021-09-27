@@ -829,8 +829,12 @@ Abp vNext框架的基础封装<br/>
 如不按照约定的项目结构则项目迁移会报错，譬如报错::“对象名 'AbpSettings' 无效。”
 
 1. 项目要放到src目录下，或者设置数据迁移目录：AbpvNextDomainStaticData.EFCoreDbMigrationSrcDirectoryPath
-2. 使用EFCore则项目名必须是以EntityFrameworkCore结尾
+2. 使用EFCore则项目名必须是以EntityFrameworkCore结尾或者使用变量配置自定义EFCore项目名
 
+~~~CSharp
+ AbpvNextDomainStaticData.EFCoreDbMigrationProjectName = "ProjectName.EntityFrameworkCore";
+~~~
+3. 升级Abp Cli版本和项目版本的Abp一致
 
 #### 参与贡献
 
