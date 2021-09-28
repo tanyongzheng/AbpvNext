@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;
+using WebApiDemo.Users;
 
 namespace WebApiDemo.EntityFrameworkCore
 {
@@ -39,6 +41,19 @@ namespace WebApiDemo.EntityFrameworkCore
                  * See the documentation for more:
                  * https://docs.abp.io/en/abp/latest/Customizing-Application-Modules-Extending-Entities
                  */
+
+                #region 共享表拓展字段映射配置
+                ObjectExtensionManager.Instance
+                    .MapEfCoreProperty<IdentityUser, Guid?>(
+                        nameof(AppIdentityUser.ParentId),
+                        (entityBuilder, propertyBuilder) =>
+                        {
+                            // propertyBuilder.
+                            entityBuilder.HasIndex(nameof(AppIdentityUser.ParentId));
+                        }
+                    ); 
+                #endregion
+
             });
         }
     }

@@ -13,6 +13,8 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Users.EntityFrameworkCore;
+using WebApiDemo.Users;
 
 namespace WebApiDemo.EntityFrameworkCore
 {
@@ -54,6 +56,12 @@ namespace WebApiDemo.EntityFrameworkCore
 
         #endregion
 
+
+        #region 数据迁移的时候要注释的共享表实体
+        // public DbSet<AppIdentityUser> AppIdentityUsers { get; set; } 
+        #endregion
+
+
         public WebApiDemoDbContext(DbContextOptions<WebApiDemoDbContext> options)
             : base(options)
         {
@@ -83,6 +91,20 @@ namespace WebApiDemo.EntityFrameworkCore
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});
+
+            #region 数据迁移的时候要注释的共享表配置
+
+            builder.Entity<AppIdentityUser>(b =>
+            {
+                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+
+                b.HasIndex(u => u.ParentId);
+            }); 
+            #endregion
+
         }
     }
 }

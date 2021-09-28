@@ -836,6 +836,158 @@ Abp vNext框架的基础封装<br/>
 ~~~
 3. 升级Abp Cli版本和项目版本的Abp一致
 
+4. 如果是4.4.0版本及以下升级过来的，或有和Abp自带实体共享表的，4.4.0及以后版本官方模板去掉了.EntityFrameworkCore.DbMigrations项目，
+做数据迁移的时候需要注释掉EF Core的数据上下文中共享表的实体及相关配置。如4.4.0之前版本的模板中有AppUser。
+  如共享表需要添加字段，则需要在EfCoreEntityExtensionMappings结尾的类中添加对应的拓展字段配置，可参考本项目的WebApiDemo
+
+
+~~~CSharp
+
+    [ReplaceDbContext(typeof(IIdentityDbContext))]
+    [ReplaceDbContext(typeof(ITenantManagementDbContext))]
+    [ConnectionStringName("Default")]
+    public class ProjectNameDbContext : 
+        AbpDbContext<ProjectNameDbContext>,
+        IIdentityDbContext,
+        ITenantManagementDbContext
+    {
+        /* Add DbSet properties for your Aggregate Roots / Entities here. */
+        
+        #region Entities from the modules
+        
+        /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
+         * and replaced them for this DbContext. This allows you to perform JOIN
+         * queries for the entities of these modules over the repositories easily. You
+         * typically don't need that for other modules. But, if you need, you can
+         * implement the DbContext interface of the needed module and use ReplaceDbContext
+         * attribute just like IIdentityDbContext and ITenantManagementDbContext.
+         *
+         * More info: Replacing a DbContext of a module ensures that the related module
+         * uses this DbContext on runtime. Otherwise, it will use its own DbContext class.
+         */
+        
+        //Identity
+        public DbSet<IdentityUser> Users { get; set; }
+        public DbSet<IdentityRole> Roles { get; set; }
+        public DbSet<IdentityClaimType> ClaimTypes { get; set; }
+        public DbSet<OrganizationUnit> OrganizationUnits { get; set; }
+        public DbSet<IdentitySecurityLog> SecurityLogs { get; set; }
+        public DbSet<IdentityLinkUser> LinkUsers { get; set; }
+        
+        // Tenant Management
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
+
+        #endregion
+
+
+        // 数据迁移的时候要去掉这个
+        // public DbSet<AppUser> AppUsers { get; set; }
+        public ProjectNameDbContext(DbContextOptions<ProjectNameDbContext> options)
+            : base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            /* Include modules to your migration db context */
+
+            builder.ConfigurePermissionManagement();
+            builder.ConfigureSettingManagement();
+            builder.ConfigureBackgroundJobs();
+            builder.ConfigureAuditLogging();
+            builder.ConfigureIdentity();
+            builder.ConfigureIdentityServer();
+            builder.ConfigureFeatureManagement();
+            builder.ConfigureTenantManagement();
+
+            // 数据迁移的时候要去掉这个
+            /*
+            builder.Entity<AppUser>(b =>
+            {
+                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
+
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+                b.HasIndex(u => u.ParentId);
+            });
+            */
+
+            /* Configure your own tables/entities inside here */
+
+            //builder.Entity<YourEntity>(b =>
+            //{
+            //    b.ToTable(ProjectNameConsts.DbTablePrefix + "YourEntities", ProjectNameConsts.DbSchema);
+            //    b.ConfigureByConvention(); //auto configure for the base class props
+            //    //...
+            //});
+
+        }
+    }
+~~~
+
+
+~~~CSharp
+
+    public static class ProjectNameEfCoreEntityExtensionMappings
+    {
+        private static readonly OneTimeRunner OneTimeRunner = new OneTimeRunner();
+
+        public static void Configure()
+        {
+            ProjectNameGlobalFeatureConfigurator.Configure();
+            ProjectNameModuleExtensionConfigurator.Configure();
+
+            OneTimeRunner.Run(() =>
+            {
+                /* You can configure extra properties for the
+                 * entities defined in the modules used by your application.
+                 *
+                 * This class can be used to map these extra properties to table fields in the database.
+                 *
+                 * USE THIS CLASS ONLY TO CONFIGURE EF CORE RELATED MAPPING.
+                 * USE ProjectNameModuleExtensionConfigurator CLASS (in the Domain.Shared project)
+                 * FOR A HIGH LEVEL API TO DEFINE EXTRA PROPERTIES TO ENTITIES OF THE USED MODULES
+                 *
+                 * Example: Map a property to a table field:
+
+                     ObjectExtensionManager.Instance
+                         .MapEfCoreProperty<IdentityUser, string>(
+                             "MyProperty",
+                             (entityBuilder, propertyBuilder) =>
+                             {
+                                 propertyBuilder.HasMaxLength(128);
+                             }
+                         );
+
+                 * See the documentation for more:
+                 * https://docs.abp.io/en/abp/latest/Customizing-Application-Modules-Extending-Entities
+                 */
+                
+                // 共享表的拓展字段映射
+                ObjectExtensionManager.Instance
+                    .MapEfCoreProperty<IdentityUser, Guid?>(
+                        nameof(AppUser.ParentId),
+                        (entityBuilder, propertyBuilder) =>
+                        {
+                            // propertyBuilder.
+                            entityBuilder.HasIndex(nameof(AppUser.ParentId));
+                        }
+                    );
+                
+            });
+        }
+    }
+~~~
+
+5. 需要共享表的实体，需要继承已经存在的表的实体（4.4.0及以上版本）
+
+https://community.abp.io/articles/unifying-dbcontexts-for-ef-core-removing-the-ef-core-migrations-project-nsyhrtna
+
+
 #### 参与贡献
 
 1. Fork 本仓库
