@@ -19,8 +19,8 @@ using WebApiDemo.Users;
 namespace WebApiDemo.EntityFrameworkCore
 {
     // 4.4.0及以上版本才有的特性
-    //[ReplaceDbContext(typeof(IIdentityDbContext))]
-    //[ReplaceDbContext(typeof(ITenantManagementDbContext))]
+    [ReplaceDbContext(typeof(IIdentityDbContext))]
+    [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
     public class WebApiDemoDbContext :
         AbpDbContext<WebApiDemoDbContext>,
@@ -57,11 +57,6 @@ namespace WebApiDemo.EntityFrameworkCore
         #endregion
 
 
-        #region 数据迁移的时候要注释的共享表实体
-        // public DbSet<AppIdentityUser> AppIdentityUsers { get; set; } 
-        #endregion
-
-
         public WebApiDemoDbContext(DbContextOptions<WebApiDemoDbContext> options)
             : base(options)
         {
@@ -91,20 +86,6 @@ namespace WebApiDemo.EntityFrameworkCore
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});
-
-            #region 数据迁移的时候要注释的共享表配置
-
-            builder.Entity<AppIdentityUser>(b =>
-            {
-                b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
-
-                b.ConfigureByConvention();
-                b.ConfigureAbpUser();
-
-                b.HasIndex(u => u.ParentId);
-            }); 
-            #endregion
-
         }
     }
 }

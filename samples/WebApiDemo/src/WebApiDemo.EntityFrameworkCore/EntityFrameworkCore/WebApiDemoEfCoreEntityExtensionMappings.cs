@@ -43,6 +43,7 @@ namespace WebApiDemo.EntityFrameworkCore
                  */
 
                 #region 共享表拓展字段映射配置
+                // EFCore数据库拓展字段
                 ObjectExtensionManager.Instance
                     .MapEfCoreProperty<IdentityUser, Guid?>(
                         nameof(AppIdentityUser.ParentId),
@@ -51,7 +52,25 @@ namespace WebApiDemo.EntityFrameworkCore
                             // propertyBuilder.
                             entityBuilder.HasIndex(nameof(AppIdentityUser.ParentId));
                         }
-                    ); 
+                    );
+
+                // 身份用户添加拓展字段（前端显示在extraProperties对象中）
+                ObjectExtensionManager.Instance.Modules()
+                .ConfigureIdentity(identity =>
+                {
+                    identity.ConfigureUser(user =>
+                    {
+                        user.AddOrUpdateProperty<string>( //property type: string
+                            "ParentId", //property name
+                            property =>
+                            {
+                            //validation rules
+                            // property.Attributes.Add(new RequiredAttribute());
+                            // property.Attributes.Add(new StringLengthAttribute(64));
+                        }
+                        );
+                    });
+                });
                 #endregion
 
             });
