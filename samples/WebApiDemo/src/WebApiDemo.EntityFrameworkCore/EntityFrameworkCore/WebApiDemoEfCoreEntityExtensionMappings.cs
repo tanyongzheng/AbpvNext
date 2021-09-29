@@ -42,15 +42,15 @@ namespace WebApiDemo.EntityFrameworkCore
                  * https://docs.abp.io/en/abp/latest/Customizing-Application-Modules-Extending-Entities
                  */
 
-                #region 共享表拓展字段映射配置
+                #region Abp框架自带实体拓展字段映射配置
                 // EFCore数据库拓展字段
                 ObjectExtensionManager.Instance
                     .MapEfCoreProperty<IdentityUser, Guid?>(
-                        nameof(AppIdentityUser.ParentId),
+                        IdentityUserExtraPropertyConsts.ParentId,
                         (entityBuilder, propertyBuilder) =>
                         {
                             // propertyBuilder.
-                            entityBuilder.HasIndex(nameof(AppIdentityUser.ParentId));
+                            entityBuilder.HasIndex(IdentityUserExtraPropertyConsts.ParentId);
                         }
                     );
 
@@ -61,7 +61,7 @@ namespace WebApiDemo.EntityFrameworkCore
                     identity.ConfigureUser(user =>
                     {
                         user.AddOrUpdateProperty<string>( //property type: string
-                            "ParentId", //property name
+                            IdentityUserExtraPropertyConsts.ParentId, //property name
                             property =>
                             {
                             //validation rules
