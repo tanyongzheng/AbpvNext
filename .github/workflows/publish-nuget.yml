@@ -1,0 +1,56 @@
+# Action名字
+name: "publish nuget"
+
+# 触发条件
+on: 
+  push:
+    # 分支，!叹号表示否定，该分支不触发
+    branches:
+    - master
+    - '!releases/**-alpha'
+    - '!dev'
+    - '!develop'
+    - '!feature/*'
+
+    # 指定格式的标签，正则表达式 v开头，后面是数字
+    tags:
+    - '[vV][1-9]+.[0-9]+.[0-9]+'
+
+    # 忽略的分支 ,不能和分支branches标记同时使用
+    #branches-ignore:
+    #- dev
+
+# 作业
+jobs:
+
+# 作业名
+  publish-nuget:
+
+  # 运行系统
+    runs-on: windows-latest
+
+    # 运行步骤
+    steps:
+
+    # 使用github自带的action，检出指定的分支到Workflow的工作区
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+
+    # 安装dotnet运行环境 ,并带上版本号
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 5.0.302
+        
+      # 生成项目  Release模式
+    - name: Build
+      run: dotnet build --configuration Release
+      working-directory: .\templates
+
+      # 打包
+    - name: Pack GithubAction To Nuget
+      run: dotnet pack templates/src/AbpvNext/AbpvNext.csproj --include-source /p:Configuration=Release --output nuget_pkgs
+
+      # 发布到Nuget 使用带符号标记symbols的包
+    #- name: Publish AbpvNext To Nuget 
+    #  run: dotnet nuget push nuget_pkgs/AbpvNext.***.symbols.nupkg -k ${{ secrets.NUGET_KEY }} -s ${{ secrets.NUGET_URL }} --skip-duplicate

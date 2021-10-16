@@ -24,9 +24,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{3A73F3F7-03A0-4CB0-BF7A-780F677F88DA}"
 	ProjectSection(SolutionItems) = preProject
 		..\abp.props = ..\abp.props
+		..\build\build-all-release.ps1 = ..\build\build-all-release.ps1
+		..\build\build-all.ps1 = ..\build\build-all.ps1
+		..\.github\workflows\build-and-test.yml = ..\.github\workflows\build-and-test.yml
 		..\common.props = ..\common.props
+		..\build\common.ps1 = ..\build\common.ps1
 		..\configureawait.props = ..\configureawait.props
+		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
 		..\README.md = ..\README.md
+		..\build\test-all.ps1 = ..\build\test-all.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpvNext.EntityFrameworkCore.SqlServer", "src\AbpvNext.EntityFrameworkCore.SqlServer\AbpvNext.EntityFrameworkCore.SqlServer.csproj", "{D3F2C0B9-B8C2-4238-BCBB-8EAB39EC95DE}"
