@@ -6,11 +6,12 @@ on:
   push:
     # 分支，!叹号表示否定，该分支不触发
     branches:
-    - master
-    - '!releases/**-alpha'
-    - '!dev'
-    - '!develop'
-    - '!feature/*'
+#    - master
+#    - '!releases/**-alpha'
+#    - '!dev'
+#    - '!develop'
+#    - '!feature/*'
+    - 'develop'
 
     # 指定格式的标签，正则表达式 v开头，后面是数字
     tags:
@@ -62,7 +63,7 @@ jobs:
       shell: pwsh
       
       # 发布项目到Nuget
-    - name: Publish AbpvNext To Nuget
-      run: .\push_packages.ps1 ${{ secrets.NUGET_KEY }}
-      working-directory: .\nupkg
-      shell: pwsh
+#    - name: Publish AbpvNext To Nuget
+#      run: .\push_packages.ps1 ${{ secrets.NUGET_KEY }}
+#      working-directory: .\nupkg
+#      shell: pwsh

@@ -58,7 +58,7 @@ jobs:
       shell: pwsh
       
       # 打包项目
-    - name: Pack Project
-      run: .\pack.ps1
-      working-directory: .\nupkg
-      shell: pwsh
+ #   - name: Pack Project
+ #     run: .\pack.ps1
+ #     working-directory: .\nupkg
+ #     shell: pwsh
