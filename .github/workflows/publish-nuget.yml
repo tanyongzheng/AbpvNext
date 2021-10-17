@@ -56,6 +56,13 @@ jobs:
     #- name: Publish AbpvNext To Nuget 
     #  run: dotnet nuget push nuget_pkgs/AbpvNext.***.symbols.nupkg -k ${{ secrets.NUGET_KEY }} -s ${{ secrets.NUGET_URL }} --skip-duplicate
               
+    
+      # release生成全部项目   
+    - name: Build All
+      run: .\build-all-release.ps1
+      working-directory: .\build
+      shell: pwsh
+
       # 打包项目
     - name: Pack Project
       run: .\pack.ps1
