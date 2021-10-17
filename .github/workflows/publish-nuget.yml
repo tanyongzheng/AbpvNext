@@ -43,14 +43,26 @@ jobs:
         dotnet-version: 5.0.302
         
       # 生成项目  Release模式
-    - name: Build
-      run: dotnet build --configuration Release
-      working-directory: .\templates
+    #- name: Build
+    #  run: dotnet build --configuration Release
+    #  working-directory: .\templates
 
       # 打包
-    - name: Pack GithubAction To Nuget
-      run: dotnet pack templates/src/AbpvNext/AbpvNext.csproj --include-source /p:Configuration=Release --output nuget_pkgs
+   # - name: Pack GithubAction To Nuget
+   #   run: dotnet pack templates/src/AbpvNext/AbpvNext.csproj --include-source /p:Configuration=Release --output nuget_pkgs
 
       # 发布到Nuget 使用带符号标记symbols的包
     #- name: Publish AbpvNext To Nuget 
     #  run: dotnet nuget push nuget_pkgs/AbpvNext.***.symbols.nupkg -k ${{ secrets.NUGET_KEY }} -s ${{ secrets.NUGET_URL }} --skip-duplicate
+              
+      # 打包项目
+    - name: Pack Project
+      run: .\pack.ps1
+      working-directory: .\nupkg
+      shell: pwsh
+      
+      # 发布项目到Nuget
+    - name: Publish AbpvNext To Nuget
+      run: .\push_packages.ps1 ${{ secrets.NUGET_KEY }}
+      working-directory: .\nupkg
+      shell: pwsh

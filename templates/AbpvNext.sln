@@ -29,8 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solut
 		..\.github\workflows\build-and-test.yml = ..\.github\workflows\build-and-test.yml
 		..\common.props = ..\common.props
 		..\build\common.ps1 = ..\build\common.ps1
+		..\nupkg\common_nupkg.ps1 = ..\nupkg\common_nupkg.ps1
 		..\configureawait.props = ..\configureawait.props
+		..\nupkg\pack.ps1 = ..\nupkg\pack.ps1
 		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
+		..\nupkg\push_packages.ps1 = ..\nupkg\push_packages.ps1
 		..\README.md = ..\README.md
 		..\build\test-all.ps1 = ..\build\test-all.ps1
 	EndProjectSection

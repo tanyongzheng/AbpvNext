@@ -56,3 +56,9 @@ jobs:
       run: .\test-all.ps1
       working-directory: .\build
       shell: pwsh
+      
+      # 打包项目
+    - name: Pack Project
+      run: .\pack.ps1
+      working-directory: .\nupkg
+      shell: pwsh

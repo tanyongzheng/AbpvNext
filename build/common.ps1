@@ -1,7 +1,7 @@
 $full = $args[0]
 
 # 公共路径 
-
+# 获取根目录完整路径
 $rootFolder = (Get-Item -Path "./" -Verbose).FullName
 
 # 开发模式下的解决方案列表，主要包含类库项目和部分样例项目，.sln文件所在路径
