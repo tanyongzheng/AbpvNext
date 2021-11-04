@@ -5,7 +5,7 @@
 
   <PropertyGroup>
 	  <!--<AbpvNextVersion>$(AbpVersion)</AbpvNextVersion>-->
-	  <AbpvNextVersion>4.4.1</AbpvNextVersion>
+	  <AbpvNextVersion>4.4.2</AbpvNextVersion>
   </PropertyGroup>
 
   <!-- 编译设置 -->
@@ -21,13 +21,14 @@
   <!-- Package 相关设置 -->
   <PropertyGroup>
     <!--<Version>$(AbpvNextVersion)</Version>-->
-    <Version>4.4.1</Version>
+    <Version>4.4.2</Version>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryType>git</RepositoryType>
-	  <PackageProjectUrl>https://github.com/tanyongzheng/AbpvNext</PackageProjectUrl>
+	<PackageProjectUrl>https://github.com/tanyongzheng/AbpvNext</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tanyongzheng/AbpvNext</RepositoryUrl>
-	  <ReleaseNotes></ReleaseNotes>
-	  <Description>Abp vNext模块封装</Description>
+	<ReleaseNotes></ReleaseNotes>
+	<Description>Abp vNext模块封装</Description>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
