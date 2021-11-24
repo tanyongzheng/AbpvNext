@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29020.237
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpvNext.Domain", "src\AbpvNext.Domain\AbpvNext.Domain.csproj", "{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}"
 EndProject
@@ -24,18 +24,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{3A73F3F7-03A0-4CB0-BF7A-780F677F88DA}"
 	ProjectSection(SolutionItems) = preProject
 		..\abp.props = ..\abp.props
-		..\build\build-all-release.ps1 = ..\build\build-all-release.ps1
-		..\build\build-all.ps1 = ..\build\build-all.ps1
-		..\.github\workflows\build-and-test.yml = ..\.github\workflows\build-and-test.yml
 		..\common.props = ..\common.props
-		..\build\common.ps1 = ..\build\common.ps1
-		..\nupkg\common_nupkg.ps1 = ..\nupkg\common_nupkg.ps1
 		..\configureawait.props = ..\configureawait.props
-		..\nupkg\pack.ps1 = ..\nupkg\pack.ps1
-		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
-		..\nupkg\push_packages.ps1 = ..\nupkg\push_packages.ps1
 		..\README.md = ..\README.md
-		..\build\test-all.ps1 = ..\build\test-all.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpvNext.EntityFrameworkCore.SqlServer", "src\AbpvNext.EntityFrameworkCore.SqlServer\AbpvNext.EntityFrameworkCore.SqlServer.csproj", "{D3F2C0B9-B8C2-4238-BCBB-8EAB39EC95DE}"
@@ -79,6 +70,27 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "..\samples\ConsoleDemo\ConsoleApp\ConsoleApp.csproj", "{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpvNext.IdentityServer", "src\AbpvNext.IdentityServer\AbpvNext.IdentityServer.csproj", "{F3B5685A-33AA-432E-A5B6-5BAD8A13419C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7BB75E89-F5A3-4566-A88F-2EA08D7456DF}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build-and-test.yml = ..\.github\workflows\build-and-test.yml
+		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E395E2A7-E61C-4E61-8A26-844239405EE7}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\build-all-release.ps1 = ..\build\build-all-release.ps1
+		..\build\build-all.ps1 = ..\build\build-all.ps1
+		..\build\common.ps1 = ..\build\common.ps1
+		..\build\test-all.ps1 = ..\build\test-all.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nupkg", "nupkg", "{3020D342-77DF-4E1A-804A-0F7425460CE8}"
+	ProjectSection(SolutionItems) = preProject
+		..\nupkg\common_nupkg.ps1 = ..\nupkg\common_nupkg.ps1
+		..\nupkg\pack.ps1 = ..\nupkg\pack.ps1
+		..\nupkg\push_packages.ps1 = ..\nupkg\push_packages.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +235,9 @@ Global
 		{2B6B2031-C519-4E70-BD7D-51F7396869A4} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{0F24FE0C-B487-4EF5-9B92-94F54C30CC7B} = {2B6B2031-C519-4E70-BD7D-51F7396869A4}
 		{F3B5685A-33AA-432E-A5B6-5BAD8A13419C} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{7BB75E89-F5A3-4566-A88F-2EA08D7456DF} = {3A73F3F7-03A0-4CB0-BF7A-780F677F88DA}
+		{E395E2A7-E61C-4E61-8A26-844239405EE7} = {3A73F3F7-03A0-4CB0-BF7A-780F677F88DA}
+		{3020D342-77DF-4E1A-804A-0F7425460CE8} = {3A73F3F7-03A0-4CB0-BF7A-780F677F88DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
