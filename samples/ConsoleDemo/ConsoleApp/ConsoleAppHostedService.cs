@@ -21,10 +21,10 @@ namespace ConsoleApp
             _serviceProvider = serviceProvider;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _application.Initialize(_serviceProvider);
-
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

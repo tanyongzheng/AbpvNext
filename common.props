@@ -5,7 +5,7 @@
 
   <PropertyGroup>
 	  <!--<AbpvNextVersion>$(AbpVersion)</AbpvNextVersion>-->
-	  <AbpvNextVersion>4.4.3</AbpvNextVersion>
+	  <AbpvNextVersion>5.0.0-rc.1</AbpvNextVersion>
   </PropertyGroup>
 
   <!-- 编译设置 -->
@@ -21,7 +21,7 @@
   <!-- Package 相关设置 -->
   <PropertyGroup>
     <!--<Version>$(AbpvNextVersion)</Version>-->
-    <Version>4.4.3</Version>
+    <Version>5.0.0-rc.1</Version>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryType>git</RepositoryType>
 	<PackageProjectUrl>https://github.com/tanyongzheng/AbpvNext</PackageProjectUrl>
