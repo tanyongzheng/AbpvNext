@@ -931,6 +931,118 @@ https://blog.abp.io/abp/ABP-Platform-4-4-RC-Has-Been-Released
 https://github.com/abpframework/abp/releases/tag/4.4.0-rc.1
 
 
+6. abp 5.1及以上版本PostgreSql数据库报错
+
+> Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array/range. See the Npgsql.EnableLegacyTimestampBehavior AppContext switch to enable legacy behavior
+
+或者数据迁移报错1：
+> Failed executing DbCommand (105ms) [Parameters=[@__providerName_0='?'], CommandType='Text', CommandTimeout='30']
+SELECT a."Id", a."Name", a."ProviderKey", a."ProviderName", a."Value"
+FROM "AbpSettings" AS a
+WHERE (a."ProviderName" = @__providerName_0) AND (a."ProviderKey" IS NULL)
+[16:47:52 ERR] An exception occurred while iterating over the results of a query for context type 'Volo.Abp.SettingManagement.EntityFrameworkCore.SettingManagementDbContext'.
+Npgsql.PostgresException (0x80004005): 42P01: 关系 "AbpSettings" 不存在
+
+> POSITION: 77
+   at Npgsql.Internal.NpgsqlConnector.<ReadMessage>g__ReadMessageLong|213_0(NpgsqlConnector connector, Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SplitQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SplitQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: 错误
+    SqlState: 42P01
+    MessageText: 关系 "AbpSettings" 不存在
+    Position: 77
+    File: parse_relation.c
+    Line: 1384
+    Routine: parserOpenTable
+Npgsql.PostgresException (0x80004005): 42P01: 关系 "AbpSettings" 不存在
+
+> POSITION: 77
+   at Npgsql.Internal.NpgsqlConnector.<ReadMessage>g__ReadMessageLong|213_0(NpgsqlConnector connector, Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SplitQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SplitQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Volo.Abp.SettingManagement.EntityFrameworkCore.EfCoreSettingRepository.GetListAsync(String providerName, String providerKey, CancellationToken cancellationToken)
+  Exception data:
+    Severity: 错误
+    SqlState: 42P01
+    MessageText: 关系 "AbpSettings" 不存在
+    Position: 77
+    File: parse_relation.c
+    Line: 1384
+    Routine: parserOpenTable
+
+报错2：
+
+>  Failed executing DbCommand (25ms) [Parameters=[@p15='?' (DbType = Guid), @p0='?', @p1='?', @p16='?', @p2='?' (DbType = DateTime), @p3='?' (DbType = Guid), @p4='?' (DbType = Guid), @p5='?' (DbType = DateTime), @p6='?', @p7='?', @p8='?' (DbType = Boolean), @p9='?', @p10='?' (DbType = Boolean), @p11='?' (DbType = DateTime), @p12='?' (DbType = Guid), @p13='?', @p14='?' (DbType = Boolean), @p65='?' (DbType = Guid), @p17='?' (DbType = Int32), @p18='?' (DbType = Int32), @p19='?' (DbType = Int32), @p20='?' (DbType = Boolean), @p21='?' (DbType = Boolean), @p22='?' (DbType = Boolean), @p23='?' (DbType = Boolean), @p24='?', @p25='?' (DbType = Boolean), @p26='?' (DbType = Boolean), @p27='?' (DbType = Int32), @p28='?' (DbType = Boolean), @p29='?', @p30='?', @p31='?', @p32='?', @p33='?', @p34='?', @p66='?', @p35='?' (DbType = Int32), @p36='?' (DbType = DateTime), @p37='?' (DbType = Guid), @p38='?' (DbType = Guid), @p39='?' (DbType = DateTime), @p40='?', @p41='?' (DbType = Int32), @p42='?' (DbType = Boolean), @p43='?' (DbType = Boolean), @p44='?', @p45='?' (DbType = Boolean), @p46='?', @p47='?' (DbType = Int32), @p48='?' (DbType = Boolean), @p49='?' (DbType = Boolean), @p50='?' (DbType = DateTime), @p51='?' (DbType = Guid), @p52='?', @p53='?', @p54='?', @p55='?' (DbType = Int32), @p56='?' (DbType = Int32), @p57='?' (DbType = Boolean), @p58='?' (DbType = Boolean), @p59='?' (DbType = Boolean), @p60='?' (DbType = Boolean), @p61='?' (DbType = Int32), @p62='?' (DbType = Boolean), @p63='?', @p64='?' (DbType = Int32), @p115='?' (DbType = Guid), @p67='?' (DbType = Int32), @p68='?' (DbType = Int32), @p69='?' (DbType = Int32), @p70='?' (DbType = Boolean), @p71='?' (DbType = Boolean), @p72='?' (DbType = Boolean), @p73='?' (DbType = Boolean), @p74='?', @p75='?' (DbType = Boolean), @p76='?' (DbType = Boolean), @p77='?' (DbType = Int32), @p78='?' (DbType = Boolean), @p79='?', @p80='?', @p81='?', @p82='?', @p83='?', @p84='?', @p116='?', @p85='?' (DbType = Int32), @p86='?' (DbType = DateTime), @p87='?' (DbType = Guid), @p88='?' (DbType = Guid), @p89='?' (DbType = DateTime), @p90='?', @p91='?' (DbType = Int32), @p92='?' (DbType = Boolean), @p93='?' (DbType = Boolean), @p94='?', @p95='?' (DbType = Boolean), @p96='?', @p97='?' (DbType = Int32), @p98='?' (DbType = Boolean), @p99='?' (DbType = Boolean), @p100='?' (DbType = DateTime), @p101='?' (DbType = Guid), @p102='?', @p103='?', @p104='?', @p105='?' (DbType = Int32), @p106='?' (DbType = Int32), @p107='?' (DbType = Boolean), @p108='?' (DbType = Boolean), @p109='?' (DbType = Boolean), @p110='?' (DbType = Boolean), @p111='?' (DbType = Int32), @p112='?' (DbType = Boolean), @p113='?', @p114='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+UPDATE "IdentityServerApiResources" SET "AllowedAccessTokenSigningAlgorithms" = @p0, "ConcurrencyStamp" = @p1, "CreationTime" = @p2, "CreatorId" = @p3, "DeleterId" = @p4, "DeletionTime" = @p5, "Description" = @p6, "DisplayName" = @p7, "Enabled" = @p8, "ExtraProperties" = @p9, "IsDeleted" = @p10, "LastModificationTime" = @p11, "LastModifierId" = @p12, "Name" = @p13, "ShowInDiscoveryDocument" = @p14
+WHERE "Id" = @p15 AND "ConcurrencyStamp" = @p16;
+UPDATE "IdentityServerClients" SET "AbsoluteRefreshTokenLifetime" = @p17, "AccessTokenLifetime" = @p18, "AccessTokenType" = @p19, "AllowAccessTokensViaBrowser" = @p20, "AllowOfflineAccess" = @p21, "AllowPlainTextPkce" = @p22, "AllowRememberConsent" = @p23, "AllowedIdentityTokenSigningAlgorithms" = @p24, "AlwaysIncludeUserClaimsInIdToken" = @p25, "AlwaysSendClientClaims" = @p26, "AuthorizationCodeLifetime" = @p27, "BackChannelLogoutSessionRequired" = @p28, "BackChannelLogoutUri" = @p29, "ClientClaimsPrefix" = @p30, "ClientId" = @p31, "ClientName" = @p32, "ClientUri" = @p33, "ConcurrencyStamp" = @p34, "ConsentLifetime" = @p35, "CreationTime" = @p36, "CreatorId" = @p37, "DeleterId" = @p38, "DeletionTime" = @p39, "Description" = @p40, "DeviceCodeLifetime" = @p41, "EnableLocalLogin" = @p42, "Enabled" = @p43, "ExtraProperties" = @p44, "FrontChannelLogoutSessionRequired" = @p45, "FrontChannelLogoutUri" = @p46, "IdentityTokenLifetime" = @p47, "IncludeJwtId" = @p48, "IsDeleted" = @p49, "LastModificationTime" = @p50, "LastModifierId" = @p51, "LogoUri" = @p52, "PairWiseSubjectSalt" = @p53, "ProtocolType" = @p54, "RefreshTokenExpiration" = @p55, "RefreshTokenUsage" = @p56, "RequireClientSecret" = @p57, "RequireConsent" = @p58, "RequirePkce" = @p59, "RequireRequestObject" = @p60, "SlidingRefreshTokenLifetime" = @p61, "UpdateAccessTokenClaimsOnRefresh" = @p62, "UserCodeType" = @p63, "UserSsoLifetime" = @p64
+WHERE "Id" = @p65 AND "ConcurrencyStamp" = @p66;
+UPDATE "IdentityServerClients" SET "AbsoluteRefreshTokenLifetime" = @p67, "AccessTokenLifetime" = @p68, "AccessTokenType" = @p69, "AllowAccessTokensViaBrowser" = @p70, "AllowOfflineAccess" = @p71, "AllowPlainTextPkce" = @p72, "AllowRememberConsent" = @p73, "AllowedIdentityTokenSigningAlgorithms" = @p74, "AlwaysIncludeUserClaimsInIdToken" = @p75, "AlwaysSendClientClaims" = @p76, "AuthorizationCodeLifetime" = @p77, "BackChannelLogoutSessionRequired" = @p78, "BackChannelLogoutUri" = @p79, "ClientClaimsPrefix" = @p80, "ClientId" = @p81, "ClientName" = @p82, "ClientUri" = @p83, "ConcurrencyStamp" = @p84, "ConsentLifetime" = @p85, "CreationTime" = @p86, "CreatorId" = @p87, "DeleterId" = @p88, "DeletionTime" = @p89, "Description" = @p90, "DeviceCodeLifetime" = @p91, "EnableLocalLogin" = @p92, "Enabled" = @p93, "ExtraProperties" = @p94, "FrontChannelLogoutSessionRequired" = @p95, "FrontChannelLogoutUri" = @p96, "IdentityTokenLifetime" = @p97, "IncludeJwtId" = @p98, "IsDeleted" = @p99, "LastModificationTime" = @p100, "LastModifierId" = @p101, "LogoUri" = @p102, "PairWiseSubjectSalt" = @p103, "ProtocolType" = @p104, "RefreshTokenExpiration" = @p105, "RefreshTokenUsage" = @p106, "RequireClientSecret" = @p107, "RequireConsent" = @p108, "RequirePkce" = @p109, "RequireRequestObject" = @p110, "SlidingRefreshTokenLifetime" = @p111, "UpdateAccessTokenClaimsOnRefresh" = @p112, "UserCodeType" = @p113, "UserSsoLifetime" = @p114
+WHERE "Id" = @p115 AND "ConcurrencyStamp" = @p116;
+[17:34:08 ERR] An exception occurred in the database while saving changes for context type 'Volo.Abp.IdentityServer.EntityFrameworkCore.IdentityServerDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.InvalidCastException: Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array/range. See the Npgsql.EnableLegacyTimestampBehavior AppContext switch to enable legacy behavior.
+   at Npgsql.Internal.TypeHandlers.DateTimeHandlers.TimestampTzHandler.ValidateAndGetLength(DateTime value, NpgsqlParameter parameter)
+   at Npgsql.Internal.TypeHandlers.DateTimeHandlers.TimestampTzHandler.ValidateObjectAndGetLength(Object value, NpgsqlLengthCache& lengthCache, NpgsqlParameter parameter)
+   at Npgsql.NpgsqlParameter.ValidateAndGetLength()
+   at Npgsql.NpgsqlParameterCollection.ValidateAndBind(ConnectorTypeMapper typeMapper)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.InvalidCastException: Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array/range. See the Npgsql.EnableLegacyTimestampBehavior AppContext switch to enable legacy behavior.
+   at Npgsql.Internal.TypeHandlers.DateTimeHandlers.TimestampTzHandler.ValidateAndGetLength(DateTime value, NpgsqlParameter parameter)
+   at Npgsql.Internal.TypeHandlers.DateTimeHandlers.TimestampTzHandler.ValidateObjectAndGetLength(Object value, NpgsqlLengthCache& lengthCache, NpgsqlParameter parameter)
+   at Npgsql.NpgsqlParameter.ValidateAndGetLength()
+   at Npgsql.NpgsqlParameterCollection.ValidateAndBind(ConnectorTypeMapper typeMapper)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(CommandBehavior behavior, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+
+
+可在Program类上设置应用上下文开关
+~~~C#
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+~~~
+
+https://github.com/abpframework/abp/issues/11437
 
 #### 参与贡献
 
