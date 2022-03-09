@@ -1,6 +1,7 @@
 ﻿using System;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Identity;
+using Volo.Abp.MultiTenancy;
 using Volo.Abp.Users;
 
 namespace AbpvNext.Entities.BusinessUser
@@ -8,10 +9,10 @@ namespace AbpvNext.Entities.BusinessUser
     /// <summary>
     /// 业务用户聚合根抽象类
     /// Id类型为Guid,和IdentityUser一致
-    /// 一个业务用户对应一个身份用户，已个身份用户对应多个业务用户
+    /// 一个业务用户对应一个身份用户，一个身份用户对应多个业务用户
     /// </summary>
     [Serializable]
-    public abstract class BusinessUserFullAuditedAggregateRoot : FullAuditedAggregateRoot<Guid>, IUser
+    public abstract class BusinessUserFullAuditedAggregateRoot : FullAuditedAggregateRoot<Guid>, IMustHaveIdentityUser, IMultiTenant, IUser
     {
         /// <summary>
         /// 租户Id
